@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import React from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, Text, View, Button, TextInput } from "react-native";
 
 export default function App() {
   const [name, setName] = useState("Owen");
@@ -19,8 +19,42 @@ export default function App() {
     setPerson({ name: person.name, age: person.age - 1 });
   };
 
+  const handleInputNameChange = (val) => {
+    setName(val);
+  };
+
   return (
     <View style={styles.container}>
+      <Text>Enter Name 1:</Text>
+      <TextInput
+        multiline
+        keyboardAppearance="dark"
+        keyboardType="ascii-capable"
+        style={styles.input}
+        placeholder="e.g. Alex"
+        onChangeText={handleInputNameChange}
+      />
+      <Text>Enter Name 2: </Text>
+      <TextInput
+        multiline
+        keyboardAppearance="light"
+        keyboardType="ascii-capable"
+        style={styles.input}
+        placeholder="e.g. Owen"
+        onChangeText={(val) => {
+          setPerson({ name: val, age: person.age });
+        }}
+      />
+      <Text>Enter Age:</Text>
+      <TextInput
+        keyboardAppearance="light"
+        keyboardType="number-pad"
+        style={styles.input}
+        placeholder="e.g. 24"
+        onChangeText={(val) => {
+          setPerson({ name: person.name, age: val });
+        }}
+      />
       <View style={styles.header}>
         <Text style={styles.boldText}>Hello World!</Text>
         <Text>My name is {name}</Text>
@@ -66,5 +100,12 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginTop: 20,
     backgroundColor: "blue",
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "#777",
+    padding: 8,
+    margin: 10,
+    width: 200,
   },
 });
