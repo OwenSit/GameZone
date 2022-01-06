@@ -1,7 +1,15 @@
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import React from "react";
-import { StyleSheet, Text, View, Button, TextInput } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TextInput,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
 
 export default function App() {
   const [name, setName] = useState("Owen");
@@ -23,9 +31,23 @@ export default function App() {
     setName(val);
   };
 
+  const [people, setPeople] = useState([
+    { name: "shaun", id: "1" },
+    { name: "yoshi", id: "2" },
+    { name: "mario", id: "3" },
+    { name: "luigi", id: "4" },
+    { name: "peach", id: "5" },
+    { name: "toad", id: "6" },
+    { name: "bowser", id: "7" },
+  ]);
+
+  const pressHandler = (id) => {
+    console.log(people[id - 1].name);
+  };
+
   return (
     <View style={styles.container}>
-      <Text>Enter Name 1:</Text>
+      <Text style={{ marginTop: 20 }}>Enter Name 1:</Text>
       <TextInput
         multiline
         keyboardAppearance="dark"
@@ -67,14 +89,16 @@ export default function App() {
           <Button title="make friend younger" onPress={handleYounger} />
         </View>
       </View>
-      <View style={styles.body}>
-        <Text style={{ fontSize: 30 }}>
-          Be the change that you wish to see in the world.
-        </Text>
-        <Text>Be the change that you wish to see in the world.</Text>
-        <Text>Be the change that you wish to see in the world.</Text>
-      </View>
-      <StatusBar style="dark" />
+      <FlatList
+        numColumns={2}
+        keyExtractor={(item) => item.id}
+        data={people}
+        renderItem={({ item }) => (
+          <TouchableOpacity onPress={() => pressHandler(item.id)}>
+            <Text style={styles.item}>{item.name}</Text>
+          </TouchableOpacity>
+        )}
+      />
     </View>
   );
 }
@@ -107,5 +131,13 @@ const styles = StyleSheet.create({
     padding: 8,
     margin: 10,
     width: 200,
+  },
+  item: {
+    marginTop: 24,
+    padding: 30,
+    backgroundColor: "pink",
+    fontSize: 24,
+    marginHorizontal: 10,
+    marginTop: 24,
   },
 });
