@@ -42,7 +42,10 @@ export default function App() {
   ]);
 
   const pressHandler = (id) => {
-    console.log(people[id - 1].name);
+    // console.log(`"${people[0].name}" is deleted`);
+    setPeople((oriPeople) => {
+      return oriPeople.filter((person) => person.id != id);
+    });
   };
 
   return (
